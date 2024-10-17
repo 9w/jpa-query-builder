@@ -17,12 +17,13 @@ public class ColumnDefinitionMapper {
     }
 
     public String getColumnName() {
+        String defaultColumnName = this.field.getName();
         if (!this.field.isAnnotationPresent(Column.class)) {
-            return this.field.getName();
+            return defaultColumnName;
         }
         String columnName = this.field.getAnnotation(Column.class).name();
         if (columnName.isEmpty()) {
-            return this.field.getName();
+            return defaultColumnName;
         }
         return columnName;
     }
