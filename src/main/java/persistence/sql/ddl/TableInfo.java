@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 public class TableInfo {
-    Class<?> entity;
+    private final Class<?> entity;
     public TableInfo(Class<?> entity) {
         this.entity = entity;
     }
