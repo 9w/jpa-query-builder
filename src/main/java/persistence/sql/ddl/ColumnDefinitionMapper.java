@@ -39,14 +39,15 @@ public class ColumnDefinitionMapper {
     }
 
     private String mapGenerationTypeAnnotation() {
+        String defaultGeneratedType = "";
         if (!this.field.isAnnotationPresent(GeneratedValue.class)) {
-            return "";
+            return defaultGeneratedType;
         }
         GeneratedValue generatedValue = this.field.getAnnotation(GeneratedValue.class);
         if (generatedValue.strategy().equals(GenerationType.IDENTITY)) {
             return "AUTO_INCREMENT";
         }
-        return "";
+        return defaultGeneratedType;
     }
 
     private String mapNotNullAnnotation() {
