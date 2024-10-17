@@ -40,8 +40,6 @@ public class QueryBuilder {
         columnInfo.add(columnDataType);
         columnInfo.addAll(columnDefinitionMapper.mapAnnotationToSQLDefinition());
 
-        columnInfo.removeAll(Arrays.asList("", null));
-
         return String.join(" ", columnInfo);
     }
 }

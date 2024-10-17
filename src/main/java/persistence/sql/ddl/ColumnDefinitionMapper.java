@@ -38,7 +38,7 @@ public class ColumnDefinitionMapper {
         columnDefinitions.add(mapNotNullAnnotation());
         columnDefinitions.add(mapGenerationTypeAnnotation());
 
-        return columnDefinitions;
+        return columnDefinitions.stream().filter(s -> !s.isEmpty()).toList();
 
     }
 
