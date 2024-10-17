@@ -28,6 +28,10 @@ public class ColumnDefinitionMapper {
         return columnName;
     }
 
+    public Class<?> getColumnType() {
+        return this.field.getType();
+    }
+
     public List<String> mapAnnotationToSQLDefinition() {
         List<String> columnDefinitions = new ArrayList<>();
         columnDefinitions.add(mapIdAnnotation());

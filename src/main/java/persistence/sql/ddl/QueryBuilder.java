@@ -33,7 +33,8 @@ public class QueryBuilder {
         List<String> columnInfo = new ArrayList<>();
         ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapper(field);
         String columnName = columnDefinitionMapper.getColumnName();
-        String columnDataType = ColumnDataType.getSqlType(field.getType());
+        Class<?> columnType = columnDefinitionMapper.getColumnType();
+        String columnDataType = ColumnDataType.getSqlType(columnType);
 
         columnInfo.add(columnName);
         columnInfo.add(columnDataType);
