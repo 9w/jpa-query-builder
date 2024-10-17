@@ -12,11 +12,17 @@ public class TableInfo {
     public String getTableName() {
         this.throwIfNotEntity();
 
+        String defaultTableName = this.entity.getSimpleName();
         Table table = this.entity.getAnnotation(Table.class);
-        if (table == null || table.name().isBlank()) {
+        if (table == null) {
             return this.entity.getSimpleName();
         }
-        return table.name();
+
+        String tableName = table.name();
+        if (tableName.isBlank()) {
+            return defaultTableName;
+        }
+        return tableName;
     }
 
     private void throwIfNotEntity() {
