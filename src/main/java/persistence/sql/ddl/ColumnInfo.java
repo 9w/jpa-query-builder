@@ -28,7 +28,7 @@ public class ColumnInfo {
         ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapper(field);
         String columnName = columnDefinitionMapper.getColumnName();
         Class<?> columnType = columnDefinitionMapper.getColumnType();
-        String columnDataType = ColumnDataType.getSqlType(columnType);
+        String columnDataType = H2Dialect.getSqlType(columnType);
 
         columnInfo.add(columnName);
         columnInfo.add(columnDataType);

@@ -1,6 +1,6 @@
 package persistence.sql.ddl;
 
-public enum ColumnDataType {
+public enum H2Dialect {
     // TODO: DB별로 타입을 확장하기
     STRING(String.class, "VARCHAR(255)"),
     INTEGER(Integer.class, "INTEGER"),
@@ -9,7 +9,7 @@ public enum ColumnDataType {
     private final String typeName;
     private final String sqlType;
 
-    ColumnDataType(Class<?> type, String sqlType) {
+    H2Dialect(Class<?> type, String sqlType) {
         this.typeName = type.getSimpleName();
         this.sqlType = sqlType;
     }
@@ -19,7 +19,7 @@ public enum ColumnDataType {
     }
 
     public static String getSqlType(Class<?> type) {
-        for (ColumnDataType fieldType : ColumnDataType.values()) {
+        for (H2Dialect fieldType : H2Dialect.values()) {
             if (fieldType.typeName.equals(type.getSimpleName())) {
                 return fieldType.sqlType;
             }
