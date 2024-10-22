@@ -1,29 +1,26 @@
 package persistence.sql.ddl;
 
-public enum H2Dialect {
-    // TODO: DB별로 타입을 확장하기
-    STRING(String.class, "VARCHAR(255)"),
-    INTEGER(Integer.class, "INTEGER"),
-    LONG(Long.class, "BIGINT");
+import java.sql.Types;
 
-    private final String typeName;
+public enum H2Dialect {
+    STRING(Types.VARCHAR, "VARCHAR(255)"),
+    INTEGER(Types.INTEGER, "INTEGER"),
+    LONG(Types.BIGINT, "BIGINT");
+
+    private final Integer type;
     private final String sqlType;
 
-    H2Dialect(Class<?> type, String sqlType) {
-        this.typeName = type.getSimpleName();
+    H2Dialect(Integer type, String sqlType) {
+        this.type = type;
         this.sqlType = sqlType;
     }
 
-    public String getSqlType() {
-        return this.sqlType;
-    }
-
-    public static String getSqlType(Class<?> type) {
+    public static String getSqlType(Integer type) {
         for (H2Dialect fieldType : H2Dialect.values()) {
-            if (fieldType.typeName.equals(type.getSimpleName())) {
+            if (fieldType.type.equals(type)) {
                 return fieldType.sqlType;
             }
         }
-        throw new IllegalArgumentException("Unsupported field type: " + type.getSimpleName());
+        throw new IllegalArgumentException("Unsupported field type: " + type);
     }
 }

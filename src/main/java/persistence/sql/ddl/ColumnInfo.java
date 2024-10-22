@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ColumnInfo {
     private final Field[] fields;
@@ -27,8 +26,11 @@ public class ColumnInfo {
         List<String> columnInfo = new ArrayList<>();
         ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapper(field);
         String columnName = columnDefinitionMapper.getColumnName();
+
         Class<?> columnType = columnDefinitionMapper.getColumnType();
-        String columnDataType = H2Dialect.getSqlType(columnType);
+        Integer sqlType = JavaSqlDialect.getSqlType(columnType);
+        String columnDataType = H2Dialect.getSqlType(sqlType);
+
 
         columnInfo.add(columnName);
         columnInfo.add(columnDataType);
