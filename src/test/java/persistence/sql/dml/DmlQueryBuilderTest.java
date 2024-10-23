@@ -71,4 +71,13 @@ public class DmlQueryBuilderTest {
         String expectedQuery = "SELECT * FROM users WHERE id = '1';";
         assertThat(dmlQueryBuilder.findById(BrandNewPerson.class, person)).isEqualTo(expectedQuery);
     }
+
+    @Test
+    @DisplayName("delete 쿼리를 생성한다")
+    void testDeleteQuery() {
+        BrandNewPerson person = new BrandNewPerson(1L);
+        DmlQueryBuilder dmlQueryBuilder = new DmlQueryBuilder();
+        String expectedQuery = "DELETE FROM users WHERE id = '1';";
+        assertThat(dmlQueryBuilder.delete(BrandNewPerson.class, person)).isEqualTo(expectedQuery);
+    }
 }
