@@ -1,5 +1,6 @@
 package persistence.sql.ddl;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 
 import java.lang.reflect.Field;
@@ -16,10 +17,23 @@ public class ColumnInfo {
 
     }
     public String getColumnInfo()  {
-        return Arrays.stream(this.fields)
-                .filter(field -> !field.isAnnotationPresent(Transient.class))
+        return Arrays.stream(this.getCreateColumns())
                 .map(this::generateColumnDefinitions)
                 .collect(Collectors.joining(", "));
+    }
+
+    private Field[] getCreateColumns() {
+        return Arrays.stream(this.fields)
+                .filter(field -> !field.isAnnotationPresent(Transient.class))
+                .toArray(Field[]::new);
+    }
+    public String[] getInsertColumns() {
+        return Arrays.stream(this.fields)
+                .filter(field -> !field.isAnnotationPresent(Transient.class) && !field.isAnnotationPresent(Id.class))
+                .map(field -> {
+                    ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapper(field);
+                    return columnDefinitionMapper.getColumnName();
+                }).toArray(String[]::new);
     }
 
     private String generateColumnDefinitions(Field field) {
