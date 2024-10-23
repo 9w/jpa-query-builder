@@ -25,6 +25,10 @@ public class DmlQueryBuilder {
         return "INSERT INTO %s (%s) VALUES (%s);".formatted(tableName, String.join(", ", columnsClause(clazz)), valueClause(object));
     }
 
+    public String delete(Class<?> clazz, Object object) {
+        return whereClause("DELETE FROM %s".formatted(new TableInfo(clazz).getTableName()), clazz, object);
+    }
+
     private String find(Class<?> clazz) {
         TableInfo tableInfo = new TableInfo(clazz);
         String tableName = tableInfo.getTableName();
