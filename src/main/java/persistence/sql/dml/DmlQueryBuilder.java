@@ -10,6 +10,13 @@ import java.util.stream.Collectors;
 
 public class DmlQueryBuilder {
 
+    public String findAll(Class<?> clazz) {
+        TableInfo tableInfo = new TableInfo(clazz);
+        String tableName = tableInfo.getTableName();
+
+        return "SELECT * FROM %s;".formatted(tableName);
+    }
+
     public String insert(Class<?> clazz, Object object) {
         TableInfo tableInfo = new TableInfo(clazz);
         String tableName = tableInfo.getTableName();
