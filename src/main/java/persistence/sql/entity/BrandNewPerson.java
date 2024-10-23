@@ -24,6 +24,17 @@ public class BrandNewPerson {
     public BrandNewPerson() {
     }
 
+    public BrandNewPerson(Long id) {
+        this.id = id;
+    }
+
+    public BrandNewPerson(Long id, String name, Integer age, String email) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+    }
+
     public BrandNewPerson(String name, Integer age, String email) {
         this.name = name;
         this.age = age;

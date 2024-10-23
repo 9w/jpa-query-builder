@@ -11,14 +11,11 @@ import java.util.stream.Collectors;
 public class DmlQueryBuilder {
 
     public String findAll(Class<?> clazz) {
-        TableInfo tableInfo = new TableInfo(clazz);
-        String tableName = tableInfo.getTableName();
-
-        return "SELECT * FROM %s;".formatted(tableName);
+        return "%s;".formatted(find(clazz));
     }
 
-    public String findById(Class<?> clazz, int i) {
-        return "";
+    public String findById(Class<?> clazz, Object object) {
+        return whereClause(find(clazz), clazz, object);
     }
 
     public String insert(Class<?> clazz, Object object) {
@@ -26,6 +23,13 @@ public class DmlQueryBuilder {
         String tableName = tableInfo.getTableName();
 
         return "INSERT INTO %s (%s) VALUES (%s);".formatted(tableName, String.join(", ", columnsClause(clazz)), valueClause(object));
+    }
+
+    private String find(Class<?> clazz) {
+        TableInfo tableInfo = new TableInfo(clazz);
+        String tableName = tableInfo.getTableName();
+
+        return "SELECT * FROM %s".formatted(tableName);
     }
 
     private String[] columnsClause(Class<?> clazz) {
@@ -48,11 +52,26 @@ public class DmlQueryBuilder {
             .collect(Collectors.joining(", "));
     }
 
-    private String whereClause(String selectQuery, Class<?> clazz) {
+    private String whereClause(String selectQuery, Class<?> clazz, Object object) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(selectQuery);
-        stringBuilder.append(" where ");
+        stringBuilder.append(" WHERE ");
 
-        return "";
+        return Arrays.stream(clazz.getDeclaredFields())
+                .filter(field -> !field.isAnnotationPresent(Transient.class))
+                .map(field -> {
+                    field.setAccessible(true);
+                    try {
+                        if (field.get(object) == null) {
+                            return "";
+                        }
+                        return "%s = '%s'".formatted(field.getName(), field.get(object).toString());
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.joining(" = ", stringBuilder.toString(), ";"));
+
     }
 }
