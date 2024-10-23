@@ -25,3 +25,7 @@
   - [x] @Transient 어노테이션은 컬럼에서 제외
   - [x] @Table 어노테이션을 테이블명으로 사용
 - [x] BrandNewPerson Entity로 drop 쿼리 만들어보기
+
+## 3단계 - QueryBuilder DML
+
+- [ ] insert 구현하기 (@Entity, @Table, @Id, @Column, @Transient 를 고려해서 작성하기)
