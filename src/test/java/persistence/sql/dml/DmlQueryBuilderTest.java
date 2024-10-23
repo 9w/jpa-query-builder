@@ -61,4 +61,14 @@ public class DmlQueryBuilderTest {
     @DisplayName("findAll 실행시 users 데이터를 리턴한다")
     void testFindAllExecuteQuery() {
     }
+
+
+    @Test
+    @DisplayName("findById 쿼리를 생성한다")
+    void testFindById() {
+        BrandNewPerson person = new BrandNewPerson(1L);
+        DmlQueryBuilder dmlQueryBuilder = new DmlQueryBuilder();
+        String expectedQuery = "SELECT * FROM users WHERE id = '1';";
+        assertThat(dmlQueryBuilder.findById(BrandNewPerson.class, person)).isEqualTo(expectedQuery);
+    }
 }

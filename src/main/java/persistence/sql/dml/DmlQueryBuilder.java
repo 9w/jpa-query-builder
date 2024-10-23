@@ -17,6 +17,10 @@ public class DmlQueryBuilder {
         return "SELECT * FROM %s;".formatted(tableName);
     }
 
+    public String findById(Class<?> clazz, int i) {
+        return "";
+    }
+
     public String insert(Class<?> clazz, Object object) {
         TableInfo tableInfo = new TableInfo(clazz);
         String tableName = tableInfo.getTableName();
@@ -42,5 +46,13 @@ public class DmlQueryBuilder {
             })
             .map("'%s'"::formatted)
             .collect(Collectors.joining(", "));
+    }
+
+    private String whereClause(String selectQuery, Class<?> clazz) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(selectQuery);
+        stringBuilder.append(" where ");
+
+        return "";
     }
 }

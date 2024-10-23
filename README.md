@@ -30,3 +30,4 @@
 
 - [ ] insert 구현하기 (@Entity, @Table, @Id, @Column, @Transient 를 고려해서 작성하기)
 - [ ] findAll 구현하기
+- [ ] findById 구현하기
